@@ -40,3 +40,14 @@ This project is developed with clean architecture principles, strict TypeScript 
 
 The backend will run at:
 http://localhost:4000
+
+---
+
+## Environment Variables
+
+Create a `.env` file inside the `backend` folder and add:
+
+MONGO_URI=your_mongodb_connection_string
+PORT=4000
+
+The MongoDB database is hosted on MongoDB Atlas. You must create a free cluster and allow network access to connect successfully.
