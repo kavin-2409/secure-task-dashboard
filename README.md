@@ -24,3 +24,19 @@ The application allows authenticated users to manage personal tasks with complet
 
 ## Development Approach
 This project is developed with clean architecture principles, strict TypeScript usage, and containerized using Docker.
+
+---
+
+## Running the Backend Locally
+
+1. Navigate to the backend folder:
+   cd backend
+
+2. Install dependencies:
+   npm install
+
+3. Start the development server:
+   npm run dev
+
+The backend will run at:
+http://localhost:4000
