@@ -86,3 +86,28 @@ This token must be sent in the Authorization header to access protected APIs.
 
 Example:
 Authorization: Bearer <token>
+
+---
+
+## Protected Routes
+
+Some endpoints require authentication.
+
+After logging in, you will receive a JWT token:
+
+{
+"message": "Login successful",
+"token": "your_jwt_token"
+}
+
+To access protected APIs, include the token in the request header:
+
+Authorization: Bearer your_jwt_token
+
+Example:
+
+GET /api/auth/profile
+
+This route verifies the token using middleware.
+If the token is valid, access is granted.
+If the token is missing or invalid, the server returns **401 Unauthorized**.
