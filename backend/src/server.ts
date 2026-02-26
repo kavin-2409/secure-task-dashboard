@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import taskRoutes from "./routes/task.routes";
 import express from "express";
 import cors from "cors";
 //import dotenv from "dotenv";
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/tasks", taskRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend API is running");
