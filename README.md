@@ -51,3 +51,38 @@ MONGO_URI=your_mongodb_connection_string
 PORT=4000
 
 The MongoDB database is hosted on MongoDB Atlas. You must create a free cluster and allow network access to connect successfully.
+
+## Authentication APIs
+
+### Register User
+
+POST /api/auth/register
+
+**Body**
+{
+"email": "[user@gmail.com](mailto:user@gmail.com)",
+"password": "123456"
+}
+
+Creates a new account. Password is encrypted using bcrypt before storing.
+
+---
+
+### Login User
+
+POST /api/auth/login
+
+**Body**
+{
+"email": "[user@gmail.com](mailto:user@gmail.com)",
+"password": "123456"
+}
+
+**Response**
+Returns a JWT token.
+
+After successful login, the server generates a JSON Web Token (JWT).
+This token must be sent in the Authorization header to access protected APIs.
+
+Example:
+Authorization: Bearer <token>
