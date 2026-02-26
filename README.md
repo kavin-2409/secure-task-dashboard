@@ -111,3 +111,13 @@ GET /api/auth/profile
 This route verifies the token using middleware.
 If the token is valid, access is granted.
 If the token is missing or invalid, the server returns **401 Unauthorized**.
+
+### Authentication
+POST /api/auth/register
+POST /api/auth/login
+
+### Tasks (Protected)
+POST   /api/tasks        -> create task
+GET    /api/tasks        -> get user tasks
+PUT    /api/tasks/:id    -> update own task
+DELETE /api/tasks/:id    -> delete own task
