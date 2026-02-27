@@ -49,6 +49,29 @@ http://localhost:4000
 
 The MongoDB database is hosted on MongoDB Atlas. You must create a free cluster and allow network access to connect successfully.
 
+## How to Obtain MongoDB Connection String
+
+1. Go to https://www.mongodb.com/atlas/database
+2. Create a free account and create a free shared cluster.
+3. Create a database user (choose any username and password).
+4. Go to "Network Access" → Add IP Address → Allow `0.0.0.0/0` (for local testing).
+5. Click "Connect" → "Drivers" → Select Node.js.
+6. Copy the connection string provided.
+
+It will look like this:
+
+mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/taskdb
+
+Replace <username> and <password> with the database user you created.
+
+Then paste it into the `.env` file:
+
+MONGO_URI=your_connection_string
+
+You can choose any random string for JWT secret:
+
+JWT_SECRET=mySecretKey123
+
 ## Error Handling
 
 The API uses centralized error handling and validation.
@@ -134,6 +157,10 @@ POST   /api/tasks        -> create task
 GET    /api/tasks        -> get user tasks
 PUT    /api/tasks/:id    -> update own task
 DELETE /api/tasks/:id    -> delete own task
+
+---
+
+### Third Party Packages
 
 ### bcrypt
 Used to securely hash user passwords before storing them in the database. This ensures passwords are never stored in plain text.
