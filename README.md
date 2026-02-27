@@ -27,30 +27,43 @@ This project is developed with clean architecture principles, strict TypeScript 
 
 ---
 
-## Running the Backend Locally
+## Backend Setup
 
-1. Navigate to the backend folder:
-   cd backend
+1. Navigate to backend folder
+cd backend
 
-2. Install dependencies:
-   npm install
+2. Install dependencies
+npm install
 
-3. Start the development server:
-   npm run dev
-
-The backend will run at:
-http://localhost:4000
-
----
-
-## Environment Variables
-
-Create a `.env` file inside the `backend` folder and add:
+3. Create a .env file inside backend folder and add:
 
 MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
 PORT=4000
 
+4. Start the backend server
+npm run dev
+
+Server will run on:
+http://localhost:4000
+
 The MongoDB database is hosted on MongoDB Atlas. You must create a free cluster and allow network access to connect successfully.
+
+## Error Handling
+
+The API uses centralized error handling and validation.
+
+Examples:
+- Invalid input → 400 Bad Request
+- Unauthorized access → 401 Unauthorized
+- Invalid resource ID → 400 Invalid resource ID
+
+All errors return JSON responses in this format:
+
+{
+  "success": false,
+  "message": "Error description"
+}
 
 ## Authentication APIs
 
@@ -121,3 +134,28 @@ POST   /api/tasks        -> create task
 GET    /api/tasks        -> get user tasks
 PUT    /api/tasks/:id    -> update own task
 DELETE /api/tasks/:id    -> delete own task
+
+### bcrypt
+Used to securely hash user passwords before storing them in the database. This ensures passwords are never stored in plain text.
+
+### jsonwebtoken (JWT)
+Used for stateless authentication. After login, the server issues a token that the client must send with each request to access protected routes.
+
+### express-validator
+Validates incoming request data and prevents invalid or malicious input from reaching the database.
+
+### mongoose
+ODM (Object Data Modeling) library used to interact with MongoDB using schemas and models.
+
+### cors
+Allows the frontend application to securely communicate with the backend API.
+
+### dotenv
+Loads environment variables such as database connection string and secret keys from the `.env` file.
+
+### Future Improvements
+- Add task due dates and overdue detection
+- Implement rate limiting for login attempts
+- Add activity logging for user actions
+- Improve UI with better responsiveness
+- Add unit and integration testing
