@@ -7,7 +7,7 @@ import cors from "cors";
 //import dotenv from "dotenv";
 import { connectDB } from "./config/db";
 import authRoutes from "./routes/auth.routes";
-
+import { errorHandler } from "./middleware/error.middleware";
 dotenv.config();
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
-
+app.use(errorHandler);
 app.get("/", (req, res) => {
   res.send("Backend API is running");
 });
