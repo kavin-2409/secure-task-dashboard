@@ -14,38 +14,46 @@ function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [title, setTitle] = useState("");
 const [description, setDescription] = useState("");
+const [loading, setLoading] = useState(false);
 
   // Fetch tasks
 const fetchTasks = async () => {
+  setLoading(true);
   try {
     const response = await API.get("/tasks");
     setTasks(response.data as Task[]);
   } catch (error) {
     console.log("Backend error:", error);
+  } finally {
+    setLoading(false);
   }
 };
 const handleCreateTask = async () => {
   if (!title.trim()) return;
 
+  setLoading(true);
+
   try {
-    await API.post("/tasks", {
-      title,
-      description,
-    });
+    await API.post("/tasks", { title, description });
 
     setTitle("");
     setDescription("");
-    fetchTasks(); // refresh tasks
+    await fetchTasks();
   } catch (error) {
     console.log("Failed to create task", error);
+  } finally {
+    setLoading(false);
   }
 };
 const handleDeleteTask = async (id: string) => {
+  setLoading(true);
   try {
     await API.delete(`/tasks/${id}`);
-    fetchTasks(); // refresh list
+    await fetchTasks();
   } catch (error) {
     console.log("Failed to delete task", error);
+  } finally {
+    setLoading(false);
   }
 };
 const handleToggleComplete = async (task: Task) => {
@@ -123,6 +131,7 @@ return (
         </div>
 
         {/* Task List */}
+        {loading && <p style={{ textAlign: "center" }}>Loading...</p>}
         <div className="task-list">
           {tasks.length === 0 ? (
             <p className="empty">No tasks yet</p>
