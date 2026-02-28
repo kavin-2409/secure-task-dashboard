@@ -287,3 +287,22 @@ body {
   font-size: 13px;
   margin-top: 5px;
 }
+.task-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #ef4444;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-btn:hover {
+  color: #dc2626;
+  transform: scale(1.2);
+}

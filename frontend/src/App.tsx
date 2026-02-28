@@ -39,6 +39,14 @@ const handleCreateTask = async () => {
     console.log("Failed to create task", error);
   }
 };
+const handleDeleteTask = async (id: string) => {
+  try {
+    await API.delete(`/tasks/${id}`);
+    fetchTasks(); // refresh list
+  } catch (error) {
+    console.log("Failed to delete task", error);
+  }
+};
 
   // Check login on app start
  useEffect(() => {
@@ -107,11 +115,19 @@ return (
             <p className="empty">No tasks yet</p>
           ) : (
             tasks.map((task) => (
-              <div className="task-card" key={task._id}>
-                <h3>{task.title}</h3>
-                <p>{task.description}</p>
-              </div>
-            ))
+  <div className="task-card" key={task._id}>
+    <div className="task-card-header">
+      <h3>{task.title}</h3>
+      <button
+        className="delete-btn"
+        onClick={() => handleDeleteTask(task._id)}
+      >
+        ✕
+      </button>
+    </div>
+    <p>{task.description}</p>
+  </div>
+))
           )}
         </div>
         <div className="logout-container">
