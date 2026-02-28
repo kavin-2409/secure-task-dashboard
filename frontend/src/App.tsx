@@ -6,6 +6,7 @@ type Task = {
   _id: string;
   title: string;
   description: string;
+  completed: boolean;
 };
 
 function App() {
@@ -45,6 +46,18 @@ const handleDeleteTask = async (id: string) => {
     fetchTasks(); // refresh list
   } catch (error) {
     console.log("Failed to delete task", error);
+  }
+};
+const handleToggleComplete = async (task: Task) => {
+  try {
+    await API.put(`/tasks/${task._id}`, {
+      ...task,
+      completed: !task.completed,
+    });
+
+    fetchTasks();
+  } catch (error) {
+    console.log("Failed to update task", error);
   }
 };
 
@@ -115,9 +128,20 @@ return (
             <p className="empty">No tasks yet</p>
           ) : (
             tasks.map((task) => (
-  <div className="task-card" key={task._id}>
+  <div
+    className={`task-card ${task.completed ? "completed" : ""}`}
+    key={task._id}
+  >
     <div className="task-card-header">
-      <h3>{task.title}</h3>
+      <div className="task-left">
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={() => handleToggleComplete(task)}
+        />
+        <h3>{task.title}</h3>
+      </div>
+
       <button
         className="delete-btn"
         onClick={() => handleDeleteTask(task._id)}
@@ -125,6 +149,7 @@ return (
         ✕
       </button>
     </div>
+
     <p>{task.description}</p>
   </div>
 ))

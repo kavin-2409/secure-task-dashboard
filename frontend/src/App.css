@@ -306,3 +306,25 @@ body {
   color: #dc2626;
   transform: scale(1.2);
 }
+.task-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-left input {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Completed style */
+.task-card.completed {
+  opacity: 0.6;
+  background: #e2e8f0;
+}
+
+.task-card.completed h3 {
+  text-decoration: line-through;
+  color: #64748b;
+}
