@@ -85,7 +85,7 @@ docker compose up --build
 ## Access URLs
 
 Frontend
-http://localhost:5173
+http://localhost:3000
 
 Backend API
 http://localhost:4000
