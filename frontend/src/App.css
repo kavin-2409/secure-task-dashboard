@@ -1,198 +1,202 @@
-/* Page background */
+/* ==========================================
+   GLOBAL VARIABLES & RESET
+   ========================================== */
+:root {
+  --bg-main: #0f172a;       /* Deep slate background */
+  --bg-card: #1e293b;       /* Lighter slate for cards */
+  --bg-input: #334155;      /* Input background */
+  --text-main: #f8fafc;     /* White text */
+  --text-muted: #94a3b8;    /* Grey text */
+  --primary: #6366f1;       /* Indigo accent */
+  --primary-hover: #4f46e5;
+  --success: #22c55e;       /* Green accent */
+  --danger: #ef4444;        /* Red accent */
+  --danger-hover: #dc2626;
+}
+
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #1f2937, #111827);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+/* ==========================================
+   DASHBOARD LAYOUT (App.tsx)
+   ========================================== */
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 60px 20px;
+  box-sizing: border-box;
+}
+
+.tasks-container {
+  width: 100%;
+  max-width: 650px;
+  background: var(--bg-card);
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.tasks-container h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 32px;
+  text-align: center;
+  color: var(--text-main);
+}
+
+/* --- Task Creation Form --- */
+.create-task {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 35px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.create-task input {
+  padding: 14px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background: var(--bg-input);
+  color: var(--text-main);
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.create-task input:focus {
+  border-color: var(--primary);
+}
+
+.create-task input::placeholder {
+  color: var(--text-muted);
+}
+
+.create-task button {
+  padding: 14px;
+  border-radius: 8px;
+  background: var(--primary);
   color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-/* Main container */
-.container {
-  max-width: 850px;
-  margin: 60px auto;
-  background: #1f2937;
-  padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.4);
+.create-task button:hover:not(:disabled) {
+  background: var(--primary-hover);
 }
 
-/* Header */
-.header {
+.create-task button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* --- Task Cards --- */
+.task-card {
+  background: var(--bg-input);
+  margin-bottom: 15px;
+  padding: 20px;
+  border-radius: 12px;
+  border-left: 5px solid var(--primary);
+  transition: transform 0.2s, opacity 0.3s;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+}
+
+.task-card.completed {
+  opacity: 0.5;
+  border-left-color: var(--success);
+  background: #1e293b; /* Slightly darker to show it's done */
+}
+
+.task-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }
 
-.header h2 {
-  margin: 0;
-}
-
-/* Logout button */
-.logout-btn {
-  background: #ef4444;
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.logout-btn:hover {
-  background: #dc2626;
-}
-
-/* Task form */
-.task-form {
-  margin-top: 25px;
+.task-left {
   display: flex;
+  align-items: center;
   gap: 12px;
 }
 
-.task-form input {
-  flex: 1;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  background: #111827;
-  color: white;
-}
-
-.task-form button {
-  background: #22c55e;
-  border: none;
-  padding: 12px 20px;
-  color: white;
-  border-radius: 10px;
+.task-left input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
   cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
+  accent-color: var(--success);
 }
 
-.task-form button:hover {
-  background: #16a34a;
+.task-left h3 {
+  margin: 0;
+  font-size: 18px;
 }
 
-/* Task card */
-.task-card {
-  background: #111827;
-  margin-top: 18px;
-  padding: 18px;
-  border-radius: 12px;
-  border-left: 5px solid #22c55e;
+.task-card p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
-.task-card h3 {
-  margin: 0 0 6px 0;
-}
-
-.empty {
-  margin-top: 25px;
-  opacity: 0.7;
-}
-
-/* AUTH PAGE */
-.auth-page {
-  height: 100vh;
-  width: 100%;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* LOGIN CARD */
-.auth-card {
-  width: 360px;
-  background: white;
-  padding: 35px 30px;
-  border-radius: 18px;
-  box-shadow: 0 18px 45px rgba(0,0,0,0.25);
-  text-align: center;
-}
-
-.auth-title {
-  margin-bottom: 5px;
-}
-
-.auth-sub {
-  color: #6b7280;
-  margin-bottom: 25px;
-}
-
-/* FORM */
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.auth-form input {
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #d1d5db;
-  outline: none;
-  font-size: 14px;
-  transition: 0.2s;
-}
-
-.auth-form input:focus {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
-}
-
-/* BUTTON */
-.login-btn {
-  margin-top: 5px;
-  padding: 12px;
-  background: #6366f1;
-  color: white;
+/* --- Action Buttons --- */
+.delete-btn {
+  background: transparent;
   border: none;
-  border-radius: 10px;
+  color: var(--danger);
+  font-size: 20px;
   cursor: pointer;
-  font-weight: bold;
   transition: 0.2s;
+  padding: 5px;
 }
 
-.login-btn:hover {
-  background: #4f46e5;
-}
-
-/* ERROR MESSAGE */
-.error-msg {
-  color: #ef4444;
-  font-size: 13px;
-  margin-top: 5px;
-}
-.logout-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 30px;
+.delete-btn:hover:not(:disabled) {
+  color: var(--danger-hover);
+  transform: scale(1.1);
 }
 
 .logout-btn {
-  background: #ef4444;
-  color: white;
-  border: none;
-  padding: 10px 22px;
-  border-radius: 10px;
+  display: block;
+  width: 100%;
+  margin-top: 40px;
+  background: transparent;
+  border: 2px solid var(--danger);
+  color: var(--danger);
+  padding: 12px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
+  font-size: 16px;
   transition: 0.2s;
 }
 
 .logout-btn:hover {
-  background: #dc2626;
+  background: var(--danger);
+  color: white;
 }
-/* LOGIN PAGE LAYOUT */
+
+/* ==========================================
+   AUTH PAGES (Login / Register)
+   ========================================== */
 .login-page {
   display: flex;
   height: 100vh;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* LEFT SIDE (branding) */
 .login-left {
   flex: 1;
   background: linear-gradient(135deg, #4f46e5, #6366f1);
@@ -214,7 +218,6 @@ body {
   max-width: 400px;
 }
 
-/* RIGHT SIDE */
 .login-right {
   flex: 1;
   background: #f8fafc;
@@ -223,18 +226,20 @@ body {
   align-items: center;
 }
 
-/* LOGIN CARD */
 .login-card {
-  width: 360px;
+  width: 100%;
+  max-width: 380px;
   background: white;
-  padding: 35px;
+  padding: 40px;
   border-radius: 16px;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
   text-align: center;
 }
 
 .login-card h2 {
+  margin-top: 0;
   margin-bottom: 5px;
+  color: #1e293b;
 }
 
 .login-subtitle {
@@ -242,7 +247,6 @@ body {
   margin-bottom: 25px;
 }
 
-/* FORM */
 .login-form {
   display: flex;
   flex-direction: column;
@@ -250,30 +254,31 @@ body {
 }
 
 .login-form input {
-  padding: 12px;
+  padding: 14px;
   border-radius: 10px;
   border: 1px solid #d1d5db;
   outline: none;
-  font-size: 14px;
+  font-size: 15px;
   transition: 0.2s;
+  color: #1e293b;
 }
 
 .login-form input:focus {
   border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-/* BUTTON */
 .login-btn {
   margin-top: 10px;
-  padding: 12px;
+  padding: 14px;
   border-radius: 10px;
   border: none;
   background: #6366f1;
   color: white;
   font-weight: bold;
+  font-size: 16px;
   cursor: pointer;
-  transition: 0.25s;
+  transition: 0.2s;
 }
 
 .login-btn:hover {
@@ -281,50 +286,20 @@ body {
   transform: translateY(-2px);
 }
 
-/* ERROR MESSAGE */
 .login-error {
   color: #ef4444;
-  font-size: 13px;
-  margin-top: 5px;
-}
-.task-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
-.delete-btn {
-  background: transparent;
-  border: none;
-  color: #ef4444;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.delete-btn:hover {
-  color: #dc2626;
-  transform: scale(1.2);
-}
-.task-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.task-left input {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-}
-
-/* Completed style */
-.task-card.completed {
-  opacity: 0.6;
-  background: #e2e8f0;
-}
-
-.task-card.completed h3 {
-  text-decoration: line-through;
-  color: #64748b;
+/* Make auth responsive for smaller screens */
+@media (max-width: 768px) {
+  .login-page {
+    flex-direction: column;
+  }
+  .login-left {
+    padding: 40px 20px;
+    align-items: center;
+    text-align: center;
+  }
 }
