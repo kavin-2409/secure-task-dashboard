@@ -208,6 +208,51 @@ PORT=4000
 * Cloud deployment
 
 ---
+---
+
+## Third-Party Packages Used
+
+### Backend Dependencies
+
+**express**
+Used to build the REST API server and handle HTTP requests and routing.
+
+**mongoose**
+MongoDB Object Data Modeling (ODM) library.
+It allows defining schemas and interacting with MongoDB using models instead of raw queries.
+
+**bcrypt**
+Used to hash user passwords securely before storing them in the database.
+Passwords are never stored in plain text, preventing credential leaks even if the database is compromised.
+
+**jsonwebtoken (JWT)**
+Used for stateless authentication.
+After login, the server generates a token that the client must include in future requests to access protected routes.
+
+**express-validator**
+Validates incoming request data (email, password, task fields).
+Prevents invalid or malicious data from reaching the database.
+
+**cors**
+Allows secure communication between frontend (React) and backend (Express) running on different ports.
+
+**dotenv**
+Loads environment variables (database URL and secret keys) from a `.env` file instead of hardcoding them in the source code.
+
+---
+
+### Frontend Dependencies
+
+**react**
+Used to build the user interface with component-based architecture.
+
+**axios**
+Used to send HTTP requests from the frontend to the backend API.
+
+**vite**
+Frontend development server and build tool providing fast startup and hot reload.
+
+---
 
 ## Author
 
