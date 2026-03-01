@@ -1,188 +1,215 @@
 # Secure Task Management Dashboard
 
-## Project Overview
-A full-stack secure task management application built using React, TypeScript, Node.js, and MongoDB.
+## Overview
 
-The application allows authenticated users to manage personal tasks with complete CRUD functionality. All API routes are protected using JWT-based authentication.
+Secure Task Management Dashboard is a full-stack web application that allows users to securely manage personal tasks.
+
+The system provides authentication, protected APIs, and complete CRUD operations for tasks.
+All user data is protected using JWT authentication and passwords are securely hashed using bcrypt.
+
+This project demonstrates real-world backend architecture, authentication flow, validation, and Docker-based deployment.
+
+---
+
+## Features
+
+* User registration and login
+* JWT-based authentication
+* Protected API routes
+* Create, view, update, and delete tasks
+* Request validation
+* Centralized error handling
+* Full-stack Docker deployment
 
 ---
 
 ## Tech Stack
 
-### Frontend
-- React
-- TypeScript
-- CSS
+#### Frontend
+
+* React
+* TypeScript
+* Vite
+
+#### Backend
+
+* Node.js
+* Express.js
+* MongoDB (Mongoose)
+
+#### Security
+
+* bcrypt password hashing
+* JSON Web Token (JWT) authentication
+* Authorization middleware
+
+#### DevOps
+
+* Docker
+* Docker Compose
+
+---
+
+## Project Architecture
+
+The backend follows layered architecture:
+
+* Routes → API endpoints
+* Controllers → Business logic
+* Models → Database schema
+* Middleware → Authentication & validation
+* Utils → Token generation helpers
+
+This improves scalability, readability, and maintainability.
+
+---
+
+## Running the Project (Recommended — Docker)
+
+The application is fully containerized.
+No need to install Node.js or MongoDB locally.
+
+### Step 1 — Clone Repository
+
+git clone <your-github-repo-link>
+cd secure-task-management
+
+### Step 2 — Run Application
+
+docker compose up --build
+
+(First run may take 2-5 minutes)
+
+---
+
+## Access URLs
+
+Frontend
+http://localhost:5173
+
+Backend API
+http://localhost:4000
+
+MongoDB
+mongodb://localhost:27017
+
+---
+
+## How to Use
+
+1. Open the frontend URL
+2. Click Register
+3. Create an account
+4. Login
+5. Start adding tasks
+
+No additional configuration required.
+
+---
+
+## API Endpoints
+
+### Authentication
+
+#### Register
+
+POST /api/auth/register
+
+Body
+{
+"email": "[user@gmail.com](mailto:user@gmail.com)",
+"password": "123456"
+}
+
+#### Login
+
+POST /api/auth/login
+
+Body
+{
+"email": "[user@gmail.com](mailto:user@gmail.com)",
+"password": "123456"
+}
+
+Response
+{
+"message": "Login successful",
+"token": "jwt_token"
+}
+
+---
+
+### Task APIs (Protected)
+
+All task routes require header:
+
+Authorization: Bearer <JWT Token>
+
+#### Get Tasks
+
+GET /api/tasks
+
+#### Create Task
+
+POST /api/tasks
+{
+"title": "Complete assignment",
+"description": "Finish backend module"
+}
+
+#### Update Task
+
+PUT /api/tasks/:id
+
+#### Delete Task
+
+DELETE /api/tasks/:id
+
+---
+
+## Security Implementation
+
+* Passwords stored as hashed values using bcrypt
+* Stateless authentication using JWT
+* Protected routes using middleware
+* Request validation using express-validator
+* Centralized error handling
+
+---
+
+## Run Without Docker (Optional)
 
 ### Backend
-- Node.js
-- Express
-- MongoDB
-- JWT Authentication
 
----
-
-## Development Approach
-This project is developed with clean architecture principles, strict TypeScript usage, and containerized using Docker.
-
----
-
-## Backend Setup
-
-1. Navigate to backend folder
 cd backend
-
-2. Install dependencies
 npm install
+npm run dev
 
-3. Create a .env file inside backend folder and add:
+### Frontend
+
+cd frontend
+npm install
+npm run dev
+
+Create a `.env` file inside backend folder:
 
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 PORT=4000
 
-4. Start the backend server
-npm run dev
+---
 
-Server will run on:
-http://localhost:4000
+## Future Improvements
 
-The MongoDB database is hosted on MongoDB Atlas. You must create a free cluster and allow network access to connect successfully.
-
-## How to Obtain MongoDB Connection String
-
-1. Go to https://www.mongodb.com/atlas/database
-2. Create a free account and create a free shared cluster.
-3. Create a database user (choose any username and password).
-4. Go to "Network Access" → Add IP Address → Allow `0.0.0.0/0` (for local testing).
-5. Click "Connect" → "Drivers" → Select Node.js.
-6. Copy the connection string provided.
-
-It will look like this:
-
-mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/taskdb
-
-Replace <username> and <password> with the database user you created.
-
-Then paste it into the `.env` file:
-
-MONGO_URI=your_connection_string
-
-You can choose any random string for JWT secret:
-
-JWT_SECRET=mySecretKey123
-
-## Error Handling
-
-The API uses centralized error handling and validation.
-
-Examples:
-- Invalid input → 400 Bad Request
-- Unauthorized access → 401 Unauthorized
-- Invalid resource ID → 400 Invalid resource ID
-
-All errors return JSON responses in this format:
-
-{
-  "success": false,
-  "message": "Error description"
-}
-
-## Authentication APIs
-
-### Register User
-
-POST /api/auth/register
-
-**Body**
-{
-"email": "[user@gmail.com](mailto:user@gmail.com)",
-"password": "123456"
-}
-
-Creates a new account. Password is encrypted using bcrypt before storing.
+* Task deadlines
+* Notifications
+* Refresh tokens
+* Unit and integration testing
+* Cloud deployment
 
 ---
 
-### Login User
+## Author
 
-POST /api/auth/login
-
-**Body**
-{
-"email": "[user@gmail.com](mailto:user@gmail.com)",
-"password": "123456"
-}
-
-**Response**
-Returns a JWT token.
-
-After successful login, the server generates a JSON Web Token (JWT).
-This token must be sent in the Authorization header to access protected APIs.
-
-Example:
-Authorization: Bearer <token>
-
----
-
-## Protected Routes
-
-Some endpoints require authentication.
-
-After logging in, you will receive a JWT token:
-
-{
-"message": "Login successful",
-"token": "your_jwt_token"
-}
-
-To access protected APIs, include the token in the request header:
-
-Authorization: Bearer your_jwt_token
-
-Example:
-
-GET /api/auth/profile
-
-This route verifies the token using middleware.
-If the token is valid, access is granted.
-If the token is missing or invalid, the server returns **401 Unauthorized**.
-
-### Authentication
-POST /api/auth/register
-POST /api/auth/login
-
-### Tasks (Protected)
-POST   /api/tasks        -> create task
-GET    /api/tasks        -> get user tasks
-PUT    /api/tasks/:id    -> update own task
-DELETE /api/tasks/:id    -> delete own task
-
----
-
-### Third Party Packages
-
-### bcrypt
-Used to securely hash user passwords before storing them in the database. This ensures passwords are never stored in plain text.
-
-### jsonwebtoken (JWT)
-Used for stateless authentication. After login, the server issues a token that the client must send with each request to access protected routes.
-
-### express-validator
-Validates incoming request data and prevents invalid or malicious input from reaching the database.
-
-### mongoose
-ODM (Object Data Modeling) library used to interact with MongoDB using schemas and models.
-
-### cors
-Allows the frontend application to securely communicate with the backend API.
-
-### dotenv
-Loads environment variables such as database connection string and secret keys from the `.env` file.
-
-### Future Improvements
-- Add task due dates and overdue detection
-- Implement rate limiting for login attempts
-- Add activity logging for user actions
-- Improve UI with better responsiveness
-- Add unit and integration testing
+Kavin A
+Full Stack Developer
